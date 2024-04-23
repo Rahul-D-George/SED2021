@@ -5,29 +5,19 @@ import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 
-public class SmallOrder {
+public class SmallOrder extends Order {
 
   private static final BigDecimal GIFT_WRAP_CHARGE = new BigDecimal(3);
-
-  private final List<Product> items;
-  private final CreditCardDetails creditCardDetails;
-  private final Address billingAddress;
-  private final Address shippingAddress;
-  private final Courier courier;
   private final boolean giftWrap;
 
-  public SmallOrder(
+  public SmallOrder (
       List<Product> items,
       CreditCardDetails creditCardDetails,
       Address billingAddress,
       Address shippingAddress,
       Courier courier,
       boolean giftWrap) {
-    this.items = Collections.unmodifiableList(items);
-    this.creditCardDetails = creditCardDetails;
-    this.billingAddress = billingAddress;
-    this.shippingAddress = shippingAddress;
-    this.courier = courier;
+    super(items, creditCardDetails, billingAddress, shippingAddress, courier);
     this.giftWrap = giftWrap;
   }
 
@@ -52,9 +42,5 @@ public class SmallOrder {
     } else {
       courier.send(new Parcel(items), shippingAddress);
     }
-  }
-
-  private BigDecimal round(BigDecimal amount) {
-    return amount.setScale(2, RoundingMode.CEILING);
   }
 }
