@@ -2,12 +2,20 @@ package tennis;
 
 import javax.swing.*;
 
-public class TennisScorer {
+public class TennisScorer implements Observer {
 
-  private final TennisScorerModel tennisScorerModel = new TennisScorerModel();
+  private final TennisScorerModel tennisScorerModel;
+  private JTextField scoreDisplay;
+  JButton playerOneScores;
+  JButton playerTwoScores;
+
+  public TennisScorer(TennisScorerModel model) {
+      this.tennisScorerModel = model;
+      this.tennisScorerModel.addObserver(this);
+  }
 
   public static void main(String[] args) {
-    new TennisScorer().display();
+    new TennisScorer(new TennisScorerModel()).display();
   }
 
   private void display() {
@@ -15,31 +23,21 @@ public class TennisScorer {
     JFrame window = new JFrame("Tennis");
     window.setSize(400, 150);
 
-    JButton playerOneScores = new JButton("Player One Scores");
-    JButton playerTwoScores = new JButton("Player Two Scores");
+    playerOneScores = new JButton("Player One Scores");
+    playerTwoScores = new JButton("Player Two Scores");
 
-    JTextField scoreDisplay = new JTextField(20);
+    scoreDisplay = new JTextField(20);
     scoreDisplay.setHorizontalAlignment(JTextField.CENTER);
     scoreDisplay.setEditable(false);
 
     playerOneScores.addActionListener(
             e -> {
               tennisScorerModel.playerOneWinsPoint();
-              scoreDisplay.setText(tennisScorerModel.score());
-              if (gameHasEnded()) {
-                playerOneScores.setEnabled(false);
-                playerTwoScores.setEnabled(false);
-              }
             });
 
     playerTwoScores.addActionListener(
             e -> {
               tennisScorerModel.playerTwoWinsPoint();
-              scoreDisplay.setText(tennisScorerModel.score());
-              if (gameHasEnded()) {
-                playerOneScores.setEnabled(false);
-                playerTwoScores.setEnabled(false);
-              }
             });
 
     JPanel panel = new JPanel();
@@ -52,6 +50,14 @@ public class TennisScorer {
     window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     window.setVisible(true);
 
+  }
+
+  public void update() {
+      scoreDisplay.setText(tennisScorerModel.score());
+      if (gameHasEnded()) {
+          playerOneScores.setEnabled(false);
+          playerTwoScores.setEnabled(false);
+      }
   }
 
   private boolean gameHasEnded() {

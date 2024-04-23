@@ -1,10 +1,16 @@
 package tennis;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TennisScorerModel {
+
+
 
     private int playerOneScore = 0;
     private int playerTwoScore = 0;
     private final String[] scoreNames = {"Love", "15", "30", "40"};
+    private final List<Observer> observerList = new ArrayList<>();
 
     protected String score() {
 
@@ -37,10 +43,25 @@ public class TennisScorerModel {
     }
 
     protected void playerOneWinsPoint() {
-        playerOneScore++;
+        playerOneScore++; notifyObservers();
     }
 
     protected void playerTwoWinsPoint() {
-        playerTwoScore++;
+        playerTwoScore++; notifyObservers();
     }
+
+    public void addObserver(Observer o) {
+        observerList.add(o);
+    }
+
+    public void removeObserver(Observer o) {
+        observerList.remove(o);
+    }
+
+    private void notifyObservers() {
+        for (Observer o : observerList) {
+            o.update();
+        }
+    }
+
 }
