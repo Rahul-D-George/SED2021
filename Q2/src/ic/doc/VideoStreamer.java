@@ -14,7 +14,7 @@ public class VideoStreamer {
   private final Map<VideoStream, StreamTracker> currentStreams = new HashMap<>();
   private final PlaybackEventLog playbackEvents = new PlaybackEventLog();
 
-  public List<Movie> getSuggestedMovies(User user) {
+  public List<Movie> getSuggestedMovies(User user, Catalogue catalogue) {
     List<Movie> recommendations = MediaLibrary.getInstance().recommendedMoviesFor(user);
 
     // sort the list of suggestions in descending order of number of views
@@ -23,10 +23,19 @@ public class VideoStreamer {
     return suggestions;
   }
 
+  public boolean watchedMovie(User user, Movie movie) {
+    return playbackEvents.watched(user, movie);
+  }
+
   public VideoStream startStreaming(Movie movie, User user) {
     VideoStream stream = new VideoStream(movie);
     currentStreams.put(stream, new StreamTracker(user));
     return stream;
+  }
+
+  public void fastForward20(VideoStream stream) {
+    StreamTracker streamTracker = currentStreams.get(stream);
+    streamTracker.decTime();
   }
 
   public void stopStreaming(VideoStream stream) {

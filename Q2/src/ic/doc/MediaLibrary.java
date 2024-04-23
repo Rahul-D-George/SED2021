@@ -14,7 +14,7 @@ import static ic.doc.movies.Certification.PARENTAL_GUIDANCE;
 import static ic.doc.movies.Certification.TWELVE_A;
 import static java.util.Collections.EMPTY_LIST;
 
-public class MediaLibrary {
+public class MediaLibrary implements Catalogue {
 
     // This code is simplified for the purposes of the exam - you can imagine in real life
     // this class would be much bigger and more sophisticated, with much more data.

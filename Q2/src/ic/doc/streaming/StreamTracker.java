@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 public class StreamTracker {
     private final User user;
-    private final LocalTime timestamp = LocalTime.now();
+    private LocalTime timestamp = LocalTime.now();
 
     public StreamTracker(User user) {
         this.user = user;
@@ -19,4 +19,9 @@ public class StreamTracker {
     public User user() {
         return user;
     }
+
+    public void decTime() {
+        timestamp = timestamp.minusMinutes(20l);
+    }
+
 }
