@@ -1,4 +1,4 @@
 package ic.doc;
 
-public interface Bidder {
+public interface Bidder extends Party {
 }
