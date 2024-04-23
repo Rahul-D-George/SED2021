@@ -11,14 +11,16 @@ public abstract class Order {
     protected final Address billingAddress;
     protected final Address shippingAddress;
     protected final Courier courier;
+    protected final ChargingMethod chargingMethod;
 
     protected Order(List<Product> items, CreditCardDetails creditCardDetails,
-                    Address billingAddress, Address shippingAddress, Courier courier) {
+                    Address billingAddress, Address shippingAddress, Courier courier, ChargingMethod chargingMethod) {
         this.items = items;
         this.creditCardDetails = creditCardDetails;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
         this.courier = courier;
+        this.chargingMethod = chargingMethod;
     }
 
     public abstract void process();

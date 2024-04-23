@@ -23,7 +23,7 @@ public class RetailExample {
             new Address("180 Queens Gate, London, SW7 2AZ"),
             new Address("180 Queens Gate, London, SW7 2AZ"),
             fedex,
-            BigDecimal.ZERO);
+            BigDecimal.ZERO, CreditCardProcessor.getInstance());
 
     bigOrder.process();
 
@@ -36,7 +36,8 @@ public class RetailExample {
             new Address("180 Queens Gate, London, SW7 2AZ"),
             new Address("180 Queens Gate, London, SW7 2AZ"),
             royalMail,
-            false);
+            false,
+                CreditCardProcessor.getInstance());
 
     smallOrder.process();
   }

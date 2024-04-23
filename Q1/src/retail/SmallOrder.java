@@ -16,8 +16,9 @@ public class SmallOrder extends Order {
       Address billingAddress,
       Address shippingAddress,
       Courier courier,
-      boolean giftWrap) {
-    super(items, creditCardDetails, billingAddress, shippingAddress, courier);
+      boolean giftWrap,
+      ChargingMethod cm) {
+    super(items, creditCardDetails, billingAddress, shippingAddress, courier, cm);
     this.giftWrap = giftWrap;
   }
 
@@ -35,7 +36,7 @@ public class SmallOrder extends Order {
       total = total.add(GIFT_WRAP_CHARGE);
     }
 
-    CreditCardProcessor.getInstance().charge(round(total), creditCardDetails, billingAddress);
+    chargingMethod.charge(round(total), creditCardDetails, billingAddress);
 
     if (giftWrap) {
       courier.send(new GiftBox(items), shippingAddress);

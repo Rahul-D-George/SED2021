@@ -1,0 +1,6 @@
+i) This is the singleton class.
+
+ii) The constraint of the singleton class is that only one instantiation of the object can ever exist, and this
+instantiation is visible to all threads running on a computer. Synchronisation issues can therefore be common.
+
+iii) SEE OTHER.

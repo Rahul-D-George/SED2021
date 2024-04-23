@@ -14,8 +14,9 @@ public class BulkOrder extends Order {
       Address billingAddress,
       Address shippingAddress,
       Courier courier,
-      BigDecimal discount) {
-      super(items, creditCardDetails, billingAddress, shippingAddress, courier);
+      BigDecimal discount,
+      ChargingMethod cm) {
+      super(items, creditCardDetails, billingAddress, shippingAddress, courier, cm);
       this.discount = discount;
   }
 
@@ -35,7 +36,7 @@ public class BulkOrder extends Order {
 
     total = total.subtract(discount);
 
-    CreditCardProcessor.getInstance().charge(round(total), creditCardDetails, billingAddress);
+    chargingMethod.charge(round(total), creditCardDetails, billingAddress);
 
     courier.send(new Parcel(items), shippingAddress);
   }

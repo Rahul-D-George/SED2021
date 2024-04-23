@@ -14,6 +14,7 @@ public class OrderBuilder {
     protected Courier courier;
     protected BigDecimal discount;
     private boolean giftWrap = false;
+    private ChargingMethod cm;
 
 
     public Order build() {
@@ -22,10 +23,10 @@ public class OrderBuilder {
 
         if (items.size() > 3) {
             if (giftWrap) {throw new RuntimeException("Big order cannot have a gift-wrap.");}
-            return new BulkOrder(items, creditCardDetails, billingAddress, shippingAddress, courier, discount);
+            return new BulkOrder(items, creditCardDetails, billingAddress, shippingAddress, courier, discount, cm);
         } else {
             if (discount != null) {throw new RuntimeException("Small order cannot have a discount.");}
-            return new SmallOrder(items, creditCardDetails, billingAddress, shippingAddress, courier, giftWrap);
+            return new SmallOrder(items, creditCardDetails, billingAddress, shippingAddress, courier, giftWrap, cm);
         }
     }
 
@@ -55,6 +56,10 @@ public class OrderBuilder {
 
     public OrderBuilder withGiftWrap(boolean b) {
         giftWrap = b; return this;
+    }
+
+    public OrderBuilder withChargingMethod(ChargingMethod cm) {
+        this.cm = cm; return this;
     }
 
 }
