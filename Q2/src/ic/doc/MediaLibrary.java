@@ -21,7 +21,17 @@ public class MediaLibrary {
 
     private final List<Movie> topMovies;
 
-    public MediaLibrary() {
+    // In order to implement the required question, I have used a singleton pattern. This means
+    // that only one instance of the media library can ever be initialised, because the
+    // constructor cannot be called from anywhere other than this class.
+
+    private static final MediaLibrary instance = new MediaLibrary();
+
+    public static MediaLibrary getInstance() {
+        return instance;
+    }
+
+    private MediaLibrary() {
         topMovies = List.of(
                 new Movie("Jurassic Park",
                         "A pragmatic paleontologist touring an almost complete theme park on an " +
